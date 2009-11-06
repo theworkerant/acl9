@@ -86,7 +86,8 @@ module Acl9
 
         has_many :accepted_roles, :as => :authorizable, :class_name => role, :dependent => :destroy
 
-        has_many :"#{subj_table}",
+        has_many :"#{options[:subjects_finder_name] || subj_table}",
+          :class_name => subj_table.classify,
           :finder_sql  => ("SELECT DISTINCT #{subj_table}.*" + sql_tables + sql_where),
           :counter_sql => ("SELECT COUNT(DISTINCT #{subj_table}.id)" + sql_tables + sql_where),
           :readonly => true
